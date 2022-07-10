@@ -1,0 +1,50 @@
+# yaml-language-server: $schema=https://squidfunk.github.io/mkdocs-material/schema.json
+
+site_name: My devblog
+repo_url: https://github.com/DrBenton/devblog
+site_description: "Olivier Philippon's devblog."
+
+extra:
+  social:
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/Rougemine
+      name: Twitter
+    - icon: fontawesome/brands/github
+      link: https://github.com/DrBenton
+      name: Github
+
+theme:
+  name: material
+  custom_dir: overrides
+  features:
+    - navigation.tracking
+    - navigation.top
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.instant
+  icon:
+    logo: octicons/log-16
+
+extra_css:
+    - stylesheets/extra.css
+    
+edit_uri: ""
+  
+# https://facelessuser.github.io/pymdown-extensions/
+markdown_extensions:
+  - attr_list
+  - admonition
+  - meta
+  - toc:
+      title: On this page
+      permalink: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+
+plugins:
+  - awesome-pages:
+      strict: false
+  - search
+  - tags:
+      tags_file: tags.md

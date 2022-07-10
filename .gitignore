@@ -1,0 +1,5 @@
+# build dir: 
+/site 
+
+# Python virtual env:
+/,venv

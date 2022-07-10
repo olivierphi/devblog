@@ -1,0 +1,49 @@
+{# @link https://squidfunk.github.io/mkdocs-material/customization/#overriding-partials #}
+{# @link https://github.com/squidfunk/mkdocs-material/blob/master/material/overrides/partials/content.html #}
+
+{% if page.edit_url %}
+  {% set edit = "https://github.com/squidfunk/mkdocs-material/edit" %}
+  {% set view = "https://raw.githubusercontent.com/squidfunk/mkdocs-material" %}
+  <a href="{{ page.edit_url }}" title="{{ lang.t('edit.link.title') }}" class="md-content__button md-icon">
+    {% include ".icons/material/file-edit-outline.svg" %}
+  </a>
+  <a href="{{ page.edit_url | replace(edit, view) }}" title="View source of this page" class="md-content__button md-icon">
+    {% include ".icons/material/file-eye-outline.svg" %}
+  </a>
+{% endif %}
+{% if "tags" in config.plugins %}
+  {% include "partials/tags.html" %}
+{% endif %}
+{% if not "\x3ch1" in page.content %}
+  <h1>{{ page.title | d(config.site_name, true)}}</h1>
+{% endif %}
+
+{# start custom posts header: #}
+    {# @link https://www.dirigible.io/blogs/2021/11/2/material-blogging-capabilities/ #}
+    {% if page and page.meta and page.meta.date %}
+    <aside class="mdx-author">
+        <p>
+            <img src="https://avatars.githubusercontent.com/DrBenton" alt="@DrBenton">
+        </p>
+        <p>
+            <span> 
+                <b>Olivier Philippon</b> · <a href="https://github.com/DrBenton">@DrBenton</a>
+            </span>
+            <span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar2" viewBox="0 0 16 16">
+                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"/>
+                    <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z"/>
+                </svg> {{ page.meta.date }}
+            </span>
+        </p>
+    </aside>
+    {% endif %}
+{# end custom posts header #}
+
+{{ page.content }}
+{% if page.meta and (
+  page.meta.git_revision_date_localized or
+  page.meta.revision_date
+) %}
+  {% include "partials/source-file.html" %}
+{% endif %}
