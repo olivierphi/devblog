@@ -22,6 +22,7 @@ theme:
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.instant
+    - content.code.annotate
   icon:
     logo: octicons/log-16
 
@@ -41,6 +42,12 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
+  # Syntax highlighting:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
 
 plugins:
   - awesome-pages:

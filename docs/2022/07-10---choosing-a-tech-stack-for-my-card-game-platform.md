@@ -2,7 +2,7 @@
 title: "Choosing a tech stack for my card game platform"
 date: "2022-07-10"
 categories:
-  - "webddev"
+  - "webdev"
 tags:
   - "next.js"
   - "django"
@@ -19,7 +19,7 @@ Here are some of the technologies I have professional experience with, in no par
 Let's check their pros and cons for this card game :material-cards-playing: platform project I want to start building...
 
 Note that these bullets points are strictly subjective and personal - I think that all these stacks are perfectly good
-and valid, and choosing one or another is always a good option anyhow! :slightly_smiling_face:
+and valid, and choosing one or another is always a good option anyhow! :slight_smile:
 
 ### Next.js
 
