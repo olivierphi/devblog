@@ -17,7 +17,7 @@ potentially be of some help for other people.
 Here is how I determined what was the quickest way (for me) to put a "devblog"
 online as quickly as possible, without hours of setup. :slight_smile:
 
-# Why not Next.js?
+## Why not Next.js?
 
 My natural "go-to" option would be Next.js, with its [SSG capacities](https://nextjs.org/docs/basic-features/pages#static-generation-with-data)
 and [built-in support of MDX](https://nextjs.org/docs/advanced-features/using-mdx).  
@@ -35,7 +35,7 @@ seen any of their design that I like (that's obviously highly subjective).
 
 Hence my second option...
 
-# Using a documentation engine to make a blog, what could go wrong? :sweat_smile:
+## Using a documentation engine to make a blog, what could go wrong? :sweat_smile:
 
 ...[Material for MKDocs](https://squidfunk.github.io/mkdocs-material/)!
 
@@ -47,6 +47,8 @@ but it has some common aspects with what I wanted to do:
  - Simple but good-looking user interface theme by default :art:
  - Made with a technology I'm familiar with (Python in this case)
  - Excellent syntax highlighting (will be useful for my snippets :-), powered by Pygments
+
+## Quick setup of "_Material for MKDocs_ as a blog" 
 
 I found two good resources explaining how to use _Material for MKDocs_ as a blog engine, so I could hit the ground
 running (I really didn't want to spend hours on this setup :slight_smile:):
@@ -61,7 +63,7 @@ explaining very simply for example how one can publish the generated static HTML
 
 It looked doable! :-)  
 Let's give it a shot, with a quick Python setup:
-``` shell
+``` bash
 $ mkdir devblog && cd devblog/
 $ pyenv shell 3.10.4 # (1) 
 $ python -m venv .venv # (2)

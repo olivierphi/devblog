@@ -13,7 +13,7 @@ hide:
   - footer
 ---
 
-# Quick overview of the tech stacks I should choose from
+# Choosing a tech stack for my card game platform
 
 Here are some of the technologies I have professional experience with, in no particular order.  
 Let's check their pros and cons for this card game :material-cards-playing: platform project I want to start building...
