@@ -15,7 +15,7 @@ def on_page_markdown(markdown: str, page: Page, **kwargs) -> str:
 
     # @link https://github.com/aklajnert/mkdocs-simple-hooks
     """
-    if page.abs_url != "/":
+    if not page.is_homepage:
         return markdown  # we generate the blog TOC only on the homepage
 
     if "[BLOG_TOC]" not in markdown:
