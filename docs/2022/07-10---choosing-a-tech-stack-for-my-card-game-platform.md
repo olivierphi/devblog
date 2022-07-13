@@ -9,8 +9,6 @@ tags:
   - "laravel"
   - "rails"
   - "golang"
-hide:
-  - footer
 ---
 
 # Choosing a tech stack for my card game platform

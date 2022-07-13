@@ -12,6 +12,12 @@ extra:
     - icon: fontawesome/brands/github
       link: https://github.com/DrBenton
       name: Github
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/olivierphilippon/
+      name: LinkedIn
+
+# Copyright
+copyright: Copyright &copy; 2022 Olivier Philippon
 
 theme:
   name: material
@@ -20,7 +26,8 @@ theme:
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: amber
+      primary: orange
+      accent: orange
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
@@ -32,6 +39,9 @@ theme:
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
+  font:
+    text: Roboto
+    code: Roboto Mono        
   custom_dir: overrides
   features:
     - navigation.tracking
@@ -76,3 +86,6 @@ plugins:
   - search
   - tags:
       tags_file: tags.md
+  - mkdocs-simple-hooks:
+      hooks:
+        on_page_markdown: "my_plugins.blog_toc:on_page_markdown"
