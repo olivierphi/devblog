@@ -81,20 +81,26 @@ explaining very simply for example how one can publish the generated static HTML
 
  - https://squidfunk.github.io/mkdocs-material/publishing-your-site
 
-It looked doable! :-)  
+It was looking doable! :-)  
 Let's give it a shot, with a quick Python setup:
 ``` bash
 $ mkdir devblog && cd devblog/
 $ pyenv shell 3.10.4 # (1) 
 $ python -m venv .venv # (2)
-$ pip install -U pip poetry # (3)
-$ poetry init
-$ poetry add mkdocs-material mkdocs-awesome-pages-plugin
+$ source .venv/bin/activate # (3)
+$ pip install -U pip poetry # (4)
+$ poetry init # (5)
+$ poetry add \ # (6)
+    mkdocs-material \
+    mkdocs-awesome-pages-plugin
 ```
 
-1.  let's use a recent version of Python 
-2.  create a virtual env in a ".venv" folder
-3.  update pip, install the Poetry package manager
+1. let's use a recent version of Python 
+2. create a virtual env in a ".venv" folder
+3. activate the virtual env: from now on the Python-related commands we type only impact the ".venv" folder
+4. in the virtual env, update pip and install the Poetry package manager
+5. initialise Poetry for this project
+6. ask Poetry to install the few packages we need for this blog
 
 Now all I had to do was to follow what these 2 articles were explaining, browse a bit the 
 _Material for MKDocs_ documentation, use the [really nice icons and emojis search](https://squidfunk.github.io/mkdocs-material/reference/icons-emojis/?h=emoji#search)
@@ -112,7 +118,10 @@ Compared to these two very useful articles, my only personal touch was to add tw
 I also wanted to automate the "posts table of content" on the blog homepage.  
 I chose to do it myself, mainly because it's the kind of things I really enjoy coding ^_^  
 
-The logic lives in the [my_plugins/blog_toc/hooks.py](https://github.com/DrBenton/devblog/my_plugins/blog_toc/hooks.py) 
+The logic lives in the [my_plugins/blog_toc/hooks.py](https://github.com/DrBenton/devblog/blob/main/my_plugins/blog_toc/hooks.py) 
 Python file, plugged to the MKDocs generation lifecycle with the nice 
 [mkdocs-simple-hooks](https://github.com/aklajnert/mkdocs-simple-hooks) 
 package for the sake of simplicity :slight_smile:
+
+Later on I added the generation of a RSS feed when the blog is built, powered by the
+[mkdocs-rss-plugin](https://guts.github.io/mkdocs-rss-plugin/) package.
