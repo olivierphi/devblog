@@ -11,6 +11,7 @@ mkdocs-material = "^8.3.9"
 mkdocs-awesome-pages-plugin = "^2.7.0"
 # @link https://github.com/aklajnert/mkdocs-simple-hooks
 mkdocs-simple-hooks = "^0.1.5"
+mkdocs-rss-plugin = "^1.1.0"
 
 [tool.poetry.dev-dependencies]
 black = "^22.6.0"

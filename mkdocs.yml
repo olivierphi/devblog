@@ -1,8 +1,9 @@
 # yaml-language-server: $schema=https://squidfunk.github.io/mkdocs-material/schema.json
 
 site_name: My devblog
+site_url: https://devblog.dunsap.com/
+site_description: "Olivier Philippon's devblog"
 repo_url: https://github.com/DrBenton/devblog
-site_description: "Olivier Philippon's devblog."
 
 extra:
   social:
@@ -15,7 +16,12 @@ extra:
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/in/olivierphilippon/
       name: LinkedIn
-
+    # Powered by the "mkdocs-rss-plugin" package. Using the generated RSS feed here is something I got from there:
+    # @link https://github.com/ultrabug/ultrabug.fr/blob/master/mkdocs.yml
+    - icon: fontawesome/solid/square-rss
+      link: /feed_rss_created.xml
+      name: RSS feed
+      
 # Copyright
 copyright: Copyright &copy; 2022 Olivier Philippon
 
@@ -81,11 +87,16 @@ markdown_extensions:
   - pymdownx.superfences
 
 plugins:
+  # @link https://github.com/lukasgeiter/mkdocs-awesome-pages-plugin
+  # (must be placed *before* the "tags" plugin)
   - awesome-pages:
       strict: false
   - search
   - tags:
       tags_file: tags.md
+  # @link https://guts.github.io/mkdocs-rss-plugin/
+  - rss
+  # @link https://github.com/aklajnert/mkdocs-simple-hooks
   - mkdocs-simple-hooks:
       hooks:
         on_page_markdown: "my_plugins.blog_toc:on_page_markdown"
