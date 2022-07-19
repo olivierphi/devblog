@@ -88,9 +88,9 @@ $ mkdir devblog && cd devblog/
 $ pyenv shell 3.10.4 # (1) 
 $ python -m venv .venv # (2)
 $ source .venv/bin/activate # (3)
-$ pip install -U pip poetry # (4)
-$ poetry init # (5)
-$ poetry add \ # (6)
+(.venv) $ pip install -U pip poetry # (4)
+(.venv) $ poetry init # (5)
+(.venv) $ poetry add \ # (6)
     mkdocs-material \
     mkdocs-awesome-pages-plugin
 ```
