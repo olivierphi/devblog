@@ -27,12 +27,8 @@ There is this card game I play _a lot_ with my partner, when we go to the pub or
     who had such a total dominance of the game that it actually ended up killing the game in tournaments, 
     since he was pretty much winning all of them!
 
-In Gin Rummy scoring is easy to determine at the end of each round, however as my partner and I would not keep track 
-of our scores from one game to another we noticed that we were playing it more and more casually, 
-even a bit too much casually actually :sweat_smile: - which led us to play with less focus
-as winning or losing a round had no consequences at this point.    
 We like playing casually, but we also like trying to do our best while playing, so we had to find a handy way
-to keep track of our scores.
+to keep track of our scores to keep a bit of competitiveness.
 
 As a Web developer, of course I had to build a leaderboard for us! :nerd: :smile:
 
@@ -350,3 +346,7 @@ In the next post we'll start coding the app itself, using this pattern I was men
 shines by its simplicity and ability to scale as a project gets more and more complex. :slight_smile:
 
 _Thanks to my friend Yann - [einenlum.com](https://www.einenlum.com/) - for his review on this post :hugging:_
+
+## Part 2
+
+UPDATE: [Part 2](/2022/07-22---from-scratch-to-online-in-production-in-a-single-day-with-django-part-2) is online :slight_smile:
