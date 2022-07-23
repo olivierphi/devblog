@@ -68,6 +68,7 @@ edit_uri: ""
 markdown_extensions:
   - pymdownx.magiclink
   - attr_list
+  - abbr
   - admonition
   - meta
   - toc:

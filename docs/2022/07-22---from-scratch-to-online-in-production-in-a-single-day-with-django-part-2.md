@@ -51,12 +51,23 @@ and some basic rules like this one are good guidelines:
     as it probably means your app is doing too much.  
     In practice, we like to lower this number to **no more than five to ten models per app**.
     
-    From _[Two Scoops of Django](https://www.feldroy.com/books/two-scoops-of-django-3-x)_
+    _From [Two Scoops of Django](https://www.feldroy.com/books/two-scoops-of-django-3-x)_
 
 
-Now, let's take a look at an aspect that is probably a mystery for every new developer who enter a new ecosystem they're not
-familiar with yet - like me a few years ago when I switched from _"PHP + Symfony :elephant:"_ to _"Python + Django :snake:"_ : 
+Now, let's take a look at an aspect that may be a mystery for other developers who enter this new ecosystem they're not
+familiar with yet - like me a few years ago, when I switched from _"PHP + Symfony :elephant:"_ to _"Python + Django :snake:"_ : 
 > How to organise the business logic **inside** each Django app?
+> 
+> _Me, as I was learning Django_ :sweat_smile:
+
+Well, I guess _"the Django way"_ would probably be to follow [the Active Record pattern](https://en.wikipedia.org/wiki/Active_record_pattern)
+and write most of the code for this in the Models themselves - as well as in their 
+[Managers](https://docs.djangoproject.com/en/4.0/topics/db/managers/) 
+_(which are similar to "repositories" or "entity managers" when using the Data Mapper pattern)_
+
+However, in my own (subjective) case I generally find that doing so doesn't scale very well as the project grows, 
+as we end up having all the business logic grouped in a bunch of huge classes.  
+Which is why, as I was learning Django, I was quite eager to find another way to structure my code... :thinking:
 
 ## An efficient pattern for the business logic: simplicity that scales well :ok_hand:
 
@@ -68,7 +79,7 @@ And more specifically this part, where they explain "services" and "selectors":
 
 #### My own adaptation of the "services" and "selectors" concept from HackSoft
 
-As I'm mostly working with [GraphQL](https://graphql.org/) in my day-to-day job, I opted for a terminology that rings a bell a bit more to my hears 
+As I'm mostly working with [GraphQL](https://graphql.org/) in my day-to-day job, I opted for a terminology that rings a bell a bit more to my ears 
 than _"services"_ and _"selectors"_: `mutations` and `queries`.  
 The former is a package that contains code that _alter_ a database (adding, modifying or deleting data from it), while the
 latter is specialised in _fetching_ data.
@@ -83,7 +94,7 @@ gin-scoring/
 │     │     │     └── ...                                                                                                                                                                              
 │     │     ├── gin_scoring/                                                                                                                                                                                   
 │     │     │     ├── domain/                                                                                                                                                                                    
-│     │     │     │     ├── commands/ # (1)
+│     │     │     │     ├── mutations/ # (1)
 │     │     │     │     │     ├── __init__.py
 │     │     │     │     │     └── _save_game_result.py
 │     │     │     │     ├── queries/ # (2)
@@ -159,7 +170,37 @@ They're both structured the same way, following these principles from HackSoft's
 
 ## A concrete example, with the Gin Rummy leaderboard app
 
-#### The `domain.mutations` package of our Django app
+Ok, enough theory - let's see how that works in the context of this mini project! :slight_smile:
+
+We have a single [Django model](https://docs.djangoproject.com/en/4.0/topics/db/models/), that looks like this: 
+``` python
+class GameResult(models.Model):
+   player_north_name = models.CharField(max_length=50)
+   player_south_name = models.CharField(max_length=50)
+   outcome = models.CharField(max_length=10, choices=[(outcome, outcome) for outcome in GAME_OUTCOME.__args__])  # type: ignore
+   # These 2 ones can be `null` when the outcome is `draw`:
+   winner_name = models.CharField(max_length=50, null=True)
+   deadwood_value = models.PositiveSmallIntegerField(null=True)
+   # Computed from the previous `outcome` and `deadwood_value` fields:
+   winner_score = models.PositiveSmallIntegerField(null=True)
+   
+   created_at = models.DateTimeField(default=timezone.now)
+   
+   @property
+   def is_draw(self) -> bool:
+       return self.outcome == "draw"
+   
+   @cached_property
+   def loser_name(self) -> str | None:
+       if self.is_draw:
+          return None
+       return [name for name in (self.player_north_name, self.player_south_name) if name != self.winner_name][0]
+   
+   def __str__(self) -> str:
+       return f"{self.player_north_name.title()} vs {self.player_south_name.title()}, on {self.created_at.strftime('%a %d %b at %H:%M')}"
+``` 
+
+### The `domain.mutations` package of our Django app
 
 For this minimalist project we need only one mutation, which is triggered when the user
 submits the "New game result" HTML form:
@@ -186,13 +227,15 @@ def save_game_result(
         winner_score = calculate_round_score(game_outcome=outcome, deadwood_value=deadwood_value)
 
     game_result_model = GameResult(
+        # (3)
         player_north_name=player_north_name,
         player_south_name=player_south_name,
         outcome=outcome,
         winner_name=winner_name,
         deadwood_value=deadwood_value,
         winner_score=winner_score,
-    ) # (3)
+    )
+    # (4)
     game_result_model.save()
 
     return game_result_model
@@ -200,46 +243,29 @@ def save_game_result(
 ```
 
 1. We force this function to be used only with the "keyword arguments" syntax
-2. `GAME_OUTCOME` is just a literal type:
-   ``` python
-   GAME_OUTCOME = t.Literal["knock", "gin", "big_gin", "undercut", "draw"]
-   ``` 
-3. The model also has a `created_at` field, but it will automatically be set by the Django ORM.  
-    This model looks like this: 
-   ``` python
-   class GameResult(models.Model):
-       player_north_name = models.CharField(max_length=50)
-       player_south_name = models.CharField(max_length=50)
-       outcome = models.CharField(max_length=10, choices=[(end_type, end_type) for end_type in GAME_OUTCOME.__args__])  # type: ignore
-       # These 2 ones can be `null` when the outcome is `draw`:
-       winner_name = models.CharField(max_length=50, null=True)
-       deadwood_value = models.PositiveSmallIntegerField(null=True)
-       # Computed from the previous `end_type` and `deadwood_value` fields:
-       winner_score = models.PositiveSmallIntegerField(null=True)
-       
-       created_at = models.DateTimeField(default=timezone.now)
-       
-       @property
-       def is_draw(self) -> bool:
-           return self.outcome == "draw"
-       
-       @cached_property
-       def loser_name(self) -> str:
-           return [name for name in (self.player_north_name, self.player_south_name) if name != self.winner_name][0]
-       
-       def __str__(self) -> str:
-           return f"{self.player_north_name.title()} vs {self.player_south_name.title()}, on {self.created_at.strftime('%a %d %b at %H:%M')}"
-   ``` 
+2. `GAME_OUTCOME` is just a literal type, described later on in this same article :slight_smile:
+3. To my knowledge there's no equivalent of the 
+    [Shorthand property names of ES2015](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer#new_notations_in_ecmascript_2015)
+    in Python - which I guess must be on purpose, since readability is almost always the top priority of the language?    
+    For that reason we have to repeat the `[field name]=[arg name]` pattern, but in my opinion it's not really an issue :slight_smile:
+4. The model also has a `created_at` field, but it will automatically be set by the Django ORM
+    since we've used `default=timezone.now` when we defined the `models.DateTimeField` field :slight_smile:
+
 
 And then, we expose that function to the rest of the Python code:
 ``` python
-# file: src/apps/gin_scoring/domain/__init__.py
+# file: src/apps/gin_scoring/domain/mutations/__init__.py
 from ._save_game_result import save_game_result
 ``` 
 
-We use it like this in the Django view:
+All we have to do now is to use that mutation from a Django view.  
+There are several ways to do this, but here is an example:
 ``` python
 # file: src/apps/gin_scoring/views.py
+from .domain.mutations import save_game_result
+
+# ...
+
 @require_POST
 def post_game_result(request: HttpRequest) -> HttpResponse:
     try:
@@ -247,7 +273,8 @@ def post_game_result(request: HttpRequest) -> HttpResponse:
     except pydantic.ValidationError:
         return HttpResponseBadRequest()
 
-    commands.save_game_result(
+    save_game_result(
+        # (1)
         player_north_name=game_result_payload.player_north_name,
         player_south_name=game_result_payload.player_south_name,
         outcome=game_result_payload.outcome,
@@ -257,6 +284,12 @@ def post_game_result(request: HttpRequest) -> HttpResponse:
 
     return redirect("index")
 ``` 
+
+1. Note that we could also have opted for a more concise way to transfer data from the "validation
+    and normalisation" data structure to the mutation: :slight_smile:
+    ``` python
+    save_game_result( **game_result_payload.dict() )
+    ```
 
 !!! note "Validating the input of our Django views"
     There are multiple ways to **validate** and **normalise** the input of our Django views, before
@@ -279,48 +312,41 @@ def post_game_result(request: HttpRequest) -> HttpResponse:
         winner_name: str | None
         deadwood_value: int
     
-        @property
-        def is_draw(self) -> bool:
-            return self.outcome == "draw"
-    
         @pydantic.root_validator(pre=True)
         def normalize_player_names(cls, values: dict[str, Any]):
-            # In order to have consistent recording when players "Alice" and "Bob" add a game result, whether
-            # "Alice" is "north" and "Bob" is "south" or vice-versa, we sort their names alphabetically
+            # In order to have consistent recording when players "Rachel" and "Olivier" add a game result, whether
+            # "Rachel" is "north" and "Olivier" is "south" or vice-versa, we sort their names alphabetically
             # and then always set the "north" player to the first one and the "south" one to the second one:
-            player_north_name, player_south_name = tuple(
-                sorted(
-                    (
-                        normalize_player_name(values["player_north_name"]),
-                        normalize_player_name(values["player_south_name"]),
-                    )
+            player_north_name, player_south_name = sorted(
+                (
+                    normalize_player_name(values["player_north_name"]),
+                    normalize_player_name(values["player_south_name"]),
                 )
             )
             values["player_north_name"] = player_north_name
             values["player_south_name"] = player_south_name
-            if values["winner_name"]:
-                values["winner_name"] = normalize_player_name(values["winner_name"])
             return values
     
         @pydantic.validator("winner_name")
         def validate_winner_name(cls, v: str, values: dict[str, Any]) -> str | None:
             is_draw = values["outcome"] == "draw"
-            if is_draw:
-                # No winner name for "draw" games:
-                v = None  # type: ignore
-            if not is_draw:
-                if not v:
-                    raise ValueError(f"non-draw games must have a winner name")
-                player_names = (values["player_north_name"], values["player_south_name"])
-                if v not in player_names:
-                    raise ValueError(f"winner name {v} is not part of the players' names '{','.join(player_names)}'")
     
-            return normalize_player_name(v) if v else None
+            if is_draw:
+                return None  # No winner name for "draw" games
+    
+            if not v:
+                raise ValueError(f"non-draw games must have a winner name")
+            winner_name = normalize_player_name(v)
+            player_names = (values["player_north_name"], values["player_south_name"])
+            if winner_name not in player_names:
+                raise ValueError(f"winner name {v} is not part of the players' names '{','.join(player_names)}'")
+    
+            return winner_name
 
     ``` 
 
 
-#### The `domain.queries` package of our Django app
+### The `domain.queries` package of our Django app
 
 For this simple app we need only 3 queries:
 
@@ -332,7 +358,8 @@ For this simple app we need only 3 queries:
 
 Let's take a look at the second one, for example:
 ``` python
-# file: src/apps/gin_scoring/queries/_hall_of_fame_monthly.py
+# file: src/apps/gin_scoring/domain/queries/_hall_of_fame_monthly.py
+from collections import defaultdict
 from datetime import datetime
 from typing import NamedTuple
 
@@ -351,6 +378,10 @@ class HallOfFameMonthResult(NamedTuple): # (2)
 
 
 def hall_of_fame_monthly() -> list[HallOfFameMonthResult]:
+    # ⚠️ Probably not the very best way to achieve this...
+    # But this is a project I gave myself one single day to build,
+    # so that will do the job 😅
+    
     # @link https://docs.djangoproject.com/en/4.0/topics/db/aggregation/
     win_counts = Count("winner_score")
     total_score = Sum("winner_score")
@@ -365,10 +396,10 @@ def hall_of_fame_monthly() -> list[HallOfFameMonthResult]:
         .annotate(grand_total=(win_counts * 25) + total_score)
         .order_by("-month", "-grand_total")
     )
-    raw_results_per_month = {}
-    for raw_result in raw_results: # (4)
-        raw_results_per_month.setdefault(raw_result["month"], []).append(raw_result)
-
+    raw_results_per_month: dict[datetime, list[dict]] = defaultdict(list)
+    for raw_result in raw_results:
+        raw_results_per_month[raw_result["month"]].append(raw_result)
+        
     returned_results: list[HallOfFameMonthResult] = []
     for month, month_results in raw_results_per_month.items():
         winner_result = month_results[0]
@@ -404,11 +435,9 @@ def hall_of_fame_monthly() -> list[HallOfFameMonthResult]:
     they would all be private functions (their name would start with an underscore),
     and only the "domain" one would be public :slight_smile:
 
-Probably not the very best way to achieve this... but this is a project I gave myself one single day to build
-so that will do the job :smile:
-
 And similarly, the `__init__.py` file is in charge of exposing only what the rest of the Python
 ``` python
+# file: src/apps/gin_scoring/domain/queries/__init__.py
 from ._hall_of_fame import hall_of_fame
 from ._hall_of_fame_monthly import (
     HallOfFameMonthResult, # (1)
@@ -422,24 +451,103 @@ from ._last_game_results import last_game_results # (2)
     can also use type hints when interacting with the "domain" layer
 2. But most of the time, all we need is to expose the public function of the module :smile:
 
+### But what about the domain logic that is neither a mutation nor a query?
+
+We still have to put somewhere some parts of the domain don't fall in either categories. :thinking:    
+For example:
+
+ - Constants, enums, literal types...
+ - Data structures describing some aspects of the business logic, that can be used by both mutations and queries.
+ - Various forms of "memory-only" computations.
+
+Well... In my case, I find that in each Django app the `domain` package itself is a very good place to welcome these! :slight_smile: 
+
+For this mini project, for example, I chose to have a single Python module (`apps.gin_scoring.domain.gin_rummy`)
+to store some "business-logic-related" stuff that is specific to the Gin Rummy game :material-cards-playing:, 
+and that are neither a mutation nor a query:
+``` python
+# file: src/apps/gin_scoring/domain/gin_rummy.py
+from typing import Literal
+
+# Possible outcomes of a Gin Rummy game: # (1)
+GAME_OUTCOME = Literal["knock", "gin", "big_gin", "undercut", "draw"]
+
+
+def calculate_round_score(*, game_outcome: GAME_OUTCOME, deadwood_value: int) -> int:
+    # @link https://en.wikipedia.org/wiki/Gin_rummy#Knocking
+    match game_outcome:
+        case "draw":
+            return 0
+        case "knock":
+            return deadwood_value
+        case "gin":
+            return 25 + deadwood_value
+        case "big_gin":
+            return 31 + deadwood_value
+        case "undercut":
+            return 15 + deadwood_value
+        case _:
+            raise ValueError(f"Invalid game outcome value '{game_outcome}'")
+
+``` 
+
+1. More on that `Literal` type below :point_down:
+
+
+We can see indeed that calculating the score of a round, depending on its outcome and the value of its _deadwood_,
+is neither a mutation nor a query: it's just a standalone computation, that does not depend on anything
+we would have in a database.
+
+And the same goes for enumerating the possible outcomes of a Gin Rummy game.
+
+!!! note "Literals or Enums?"
+    To express the outcome of a Gin Rummy game I could of course have used a Python enum instead:
+    ``` python
+    @enum.unique
+    class GameOutcome(enum.Enum):
+        KNOCK = "knock" # or `enum.auto()`
+        GIN = "gin"
+        BIG_GIN = "big_gin"
+        UNDERCUT = "undercut"
+        DRAW = "draw"
+    ```
+    As for me, I must admit that I have no strict rules when I have to choose between one or another way to describe that 
+    kind of data :person_shrugging: 
+
+    I was mostly using Enums until a few years ago, but as I was using TypeScript more and more
+    I realised that I really liked using [literal types](https://www.typescriptlang.org/docs/handbook/literal-types.html) there -
+    the TypeScript equivalent of that Python `Literal` would be:
+    ```typescript
+    export type GAME_OUTCOME = "knock" | "gin" | "big_gin" | "undercut" | "draw"
+    ```
+
+    I appreciate the concision of literals, and tend to use them when I have the feeling that having such "literal values" 
+    spread in the code wouldn't cause any issue later on if I have to change their values :slight_smile:    
+    Enums are certainly easier to handle in case of refactorings, but so far I've never come across a case where during a refactoring
+    I regretted having opted for a literal rather than an Enum - fingers crossed, it won't be the case anytime soon! :smile: :fingers_crossed:
+
 ## And that's it! :slight_smile:
 
 As we can see the pattern is very simple to implement, and its few principles are a very good guideline
 for developers when they have to add some code.
 
- - **Is it code that creates, updates or deletes data in the database?**  
+ - **Is it code that creates, updates or deletes data in a database?**  
     :point_right: Let's create a new module in the `domain.mutations` package of the related Django app, 
     that will expose one single "kwargs-only" function - its name will start with a verb. 
- - **Is it code that reads data from the database?**  
+ - **Is it code that reads data from a database?**  
     :point_right: Let's create a new module in the `domain.queries` package of the related Django app,
     that will expose one single "kwargs-only" function.
+ - **Is it code that expresses the business logic but neither alters nor reads data from a database?**  
+    :point_right: Let's put that in a module of the `domain` package of the related Django app.
 
-Its beauty is that it really scales very well: my team and I used it for years on ever-growing code bases without
-ever reaching a limitation of it. :ok_hand:
+The beauty of that pattern is that it really scales very well, despite its simplicity: my former teams and I used it for years 
+on ever-growing code bases without having ever faced a case where the pattern would show a limitation. :ok_hand:
 
-The 3rd (and last) article of this series will be a quick one, about how I hosted this app - for free - at the
-end of that single day.  
-I might also share a bit about the "code quality" tools I've used.
+!!! info
+     The 3rd (and last) article of this series will be a quick one, about how I hosted this app - for free :v: - 
+     at the end of that single day of work.
+
+     I might also share a bit about the "code quality" tools I've used, in case it could be useful to anyone :slight_smile:
 
 ## Acknowledgements
 
@@ -448,3 +556,8 @@ Thank you so much HackSoft for your [Django Styleguide](https://github.com/HackS
 I would also like to thank Audrey and Daniel Roy Greenfeld for their book [Two Scoops Of Django](https://www.feldroy.com/books/two-scoops-of-django-3-x),
 which was a very helpful resource for me when I started to learn Django and tried to see what the best practices could be 
 in this ecosystem - definitely worth the purchase! :slight_smile:
+
+And thanks again to my friend Yann - [einenlum.com](https://www.einenlum.com/) - for his careful review :eyeglasses: and useful feedback 
+on this article :hugging:
+
+*[deadwood]: The Gim Rummy jargon for cards that can't be grouped together in a player's hand
