@@ -118,7 +118,7 @@ Compared to these two very useful articles, my only personal touch was to add tw
 I also wanted to automate the "posts table of content" on the blog homepage.  
 I chose to do it myself, mainly because it's the kind of things I really enjoy coding ^_^  
 
-The logic lives in the [my_plugins/blog_toc/hooks.py](https://github.com/DrBenton/devblog/blob/main/my_plugins/blog_toc/hooks.py) 
+The logic lives in the [my_plugins/blog_toc/hooks.py](https://github.com/olivierphi/devblog/blob/main/my_hooks/blog_toc/hooks.py) 
 Python file, plugged to the MKDocs generation lifecycle with the nice 
 [mkdocs-simple-hooks](https://github.com/aklajnert/mkdocs-simple-hooks) 
 package for the sake of simplicity :slight_smile:

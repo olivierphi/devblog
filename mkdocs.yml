@@ -3,7 +3,7 @@
 site_name: My devblog
 site_url: https://devblog.dunsap.com/
 site_description: "Olivier Philippon's devblog"
-repo_url: https://github.com/DrBenton/devblog
+repo_url: https://github.com/olivierphi/devblog
 
 extra:
   social:
@@ -11,7 +11,7 @@ extra:
       link: https://twitter.com/Rougemine
       name: Twitter
     - icon: fontawesome/brands/github
-      link: https://github.com/DrBenton
+      link: https://github.com/olivierphi
       name: Github
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/in/olivierphilippon/
@@ -99,4 +99,4 @@ plugins:
   # @link https://github.com/aklajnert/mkdocs-simple-hooks
   - mkdocs-simple-hooks:
       hooks:
-        on_page_markdown: "my_plugins.blog_toc:on_page_markdown"
+        on_page_markdown: "my_hooks.blog_toc:on_page_markdown"
