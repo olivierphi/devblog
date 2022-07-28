@@ -15,6 +15,10 @@ tags:
     TIL: it is possible to make SQLite data insertions 3 times faster :rocket: in a "local development" environment - 
     where data integrity is not a crucial criteria.
 
+**UPDATE**:  
+It turns out that we can even reach a "**30 times faster**" gain with additional tweaks :exploding_head: - 
+see [the update](#update) at the end of the article.
+
 ## Inserting data in a SQLite database can be quite slow
 
 A Quick "TIL" this time... :slight_smile:
@@ -112,5 +116,41 @@ That's why in my case I want to customise this journal mode **only on my local e
 and won't do it in production.  
 **But being able to opt in for 3 times faster data insertions is still a pretty good discovery**, 
 as being able to iterate quickly is crucial when working on such a local environment! :slight_smile:
+
+## UPDATE
+
+Following the publication of this article, the amazing [Albin](https://www.linkedin.com/in/albin-kerouanton-6aa2371a6/) gave me a pointer to this URL:
+
+ - https://avi.im/blag/2021/fast-sqlite-inserts/#sqlite-optimisations
+
+If I activate all these settings, the original 50 seconds now become... 1.7 seconds! :zap:  
+That's pretty much a **"30 times faster"** gain! :exploding_head:
+
+
+``` {.python hl_lines="3-10 19-20"}
+from django.db.backends.signals import connection_created
+
+_UNLEASH_SQLITE_QUERIES = [
+    # @link https://avi.im/blag/2021/fast-sqlite-inserts/#sqlite-optimisations
+    "PRAGMA journal_mode = memory",
+    "PRAGMA synchronous = 0",
+    "PRAGMA cache_size = 1000000",
+    "PRAGMA locking_mode = EXCLUSIVE",
+    "PRAGMA temp_store = MEMORY",
+]
+
+
+def _disable_sqlite_journal(sender, connection, **kwargs):
+    import logging
+
+    if connection.vendor == "sqlite":
+        logging.getLogger("apps").warning("Setting SQLite journal mode to 'memory', and various other settings")
+        cursor = connection.cursor()
+        for sql in _UNLEASH_SQLITE_QUERIES:
+            cursor.execute(sql)
+
+
+connection_created.connect(_disable_sqlite_journal)
+```
 
 *[TIL]: Today I Learned
