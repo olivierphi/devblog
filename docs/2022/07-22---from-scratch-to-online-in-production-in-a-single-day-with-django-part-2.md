@@ -547,8 +547,6 @@ on ever-growing code bases without having ever faced a case where the pattern wo
      The 3rd (and last) article of this series will be a quick one, about how I hosted this app - for free :v: - 
      at the end of that single day of work.
 
-     I might also share a bit about the "code quality" tools I've used, in case it could be useful to anyone :slight_smile:
-
 ## Acknowledgements
 
 Thank you so much HackSoft for your [Django Styleguide](https://github.com/HackSoftware/Django-Styleguide#services)! :green_heart:
@@ -559,5 +557,10 @@ in this ecosystem - definitely worth the purchase! :slight_smile:
 
 And thanks again to my friend Yann - [einenlum.com](https://www.einenlum.com/) - for his careful review :eyeglasses: and useful feedback 
 on this article :hugging:
+
+## Part 3
+
+UPDATE: [Part 3](/2022/08-09---from-scratch-to-online-in-production-in-a-single-day-with-django-part-3) is online :slight_smile:
+
 
 *[deadwood]: The Gim Rummy jargon for cards that can't be grouped together in a player's hand
