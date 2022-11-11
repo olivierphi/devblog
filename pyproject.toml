@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "devblog"
 version = "0.1.0"
-description = "My devblog"
+description = "Olivier Philippon's devblog"
 authors = ["Olivier Philippon <olivier@dunsap.com>"]
 license = "MIT"
 

@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://squidfunk.github.io/mkdocs-material/schema.json
 
-site_name: My devblog
+site_name: Olivier Philippon
 site_url: https://devblog.dunsap.com/
 site_description: "Olivier Philippon's devblog"
 repo_url: https://github.com/olivierphi/devblog
