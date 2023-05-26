@@ -1,5 +1,6 @@
 nav:
     - Homepage: index.md
     - "2022"
+    - "2023"
 
 order: desc
