@@ -1,0 +1,973 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Olivier Philippon's devblog">
+      
+      
+      
+        <link rel="canonical" href="https://devblog.dunsap.com/2022/07-12---building-a-markdown-based-blog/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>Building a Markdown-based blog - Olivier Philippon</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="orange" data-md-color-accent="deep-purple">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#why-not-nextjs" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Olivier Philippon" class="md-header__button md-logo" aria-label="Olivier Philippon" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M5 8.25a.75.75 0 0 1 .75-.75h4a.75.75 0 0 1 0 1.5h-4A.75.75 0 0 1 5 8.25zM4 10.5A.75.75 0 0 0 4 12h4a.75.75 0 0 0 0-1.5H4z"/><path fill-rule="evenodd" d="M13-.005H3a3 3 0 0 0-3 3c0 .676.224 1.254.603 1.722.526.65 1.331.783 1.907.783h1.177c-.364.662-.814 1.339-1.287 2.048-.205.309-.414.624-.623.946C.891 9.865 0 11.418 0 13a3 3 0 0 0 3 3h10a3 3 0 0 0 1.667-5.494.75.75 0 0 0-.834 1.246A1.5 1.5 0 1 1 11.5 13c0-.642.225-1.347.623-2.136.397-.787.933-1.593 1.501-2.446l.011-.017c.554-.83 1.139-1.709 1.582-2.588.445-.885.783-1.836.783-2.818 0-1.672-1.346-3-3-3zm-10 1.5a1.5 1.5 0 0 0-1.5 1.5c0 .321.1.569.27.778.097.12.325.227.74.227h7.674A2.737 2.737 0 0 1 10 2.995c0-.546.146-1.059.401-1.5H3zm10 0c.831 0 1.5.662 1.5 1.5 0 .646-.225 1.353-.623 2.143-.398.79-.933 1.595-1.501 2.448l-.017.026c-.552.828-1.134 1.702-1.575 2.576C10.338 11.072 10 12.021 10 13c0 .546.146 1.059.401 1.5H3A1.5 1.5 0 0 1 1.5 13c0-1.084.63-2.289 1.537-3.692.177-.274.366-.556.558-.845.632-.948 1.306-1.96 1.773-2.963h6.382a.75.75 0 0 0 .417-1.373c-.444-.298-.667-.656-.667-1.132a1.5 1.5 0 0 1 1.5-1.5z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Olivier Philippon
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Building a Markdown-based blog
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="orange" data-md-color-accent="deep-purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="orange" data-md-color-accent="deep-purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/olivierphi/devblog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../.." class="md-tabs__link">
+      Homepage
+    </a>
+  </li>
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../11-11---using-alembic-with-with-sqlalchemy-2/" class="md-tabs__link md-tabs__link--active">
+        2022
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../2023/05-17---til-content-hash-in-the-form-of-a-uuid/" class="md-tabs__link">
+        2023
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Olivier Philippon" class="md-nav__button md-logo" aria-label="Olivier Philippon" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M5 8.25a.75.75 0 0 1 .75-.75h4a.75.75 0 0 1 0 1.5h-4A.75.75 0 0 1 5 8.25zM4 10.5A.75.75 0 0 0 4 12h4a.75.75 0 0 0 0-1.5H4z"/><path fill-rule="evenodd" d="M13-.005H3a3 3 0 0 0-3 3c0 .676.224 1.254.603 1.722.526.65 1.331.783 1.907.783h1.177c-.364.662-.814 1.339-1.287 2.048-.205.309-.414.624-.623.946C.891 9.865 0 11.418 0 13a3 3 0 0 0 3 3h10a3 3 0 0 0 1.667-5.494.75.75 0 0 0-.834 1.246A1.5 1.5 0 1 1 11.5 13c0-.642.225-1.347.623-2.136.397-.787.933-1.593 1.501-2.446l.011-.017c.554-.83 1.139-1.709 1.582-2.588.445-.885.783-1.836.783-2.818 0-1.672-1.346-3-3-3zm-10 1.5a1.5 1.5 0 0 0-1.5 1.5c0 .321.1.569.27.778.097.12.325.227.74.227h7.674A2.737 2.737 0 0 1 10 2.995c0-.546.146-1.059.401-1.5H3zm10 0c.831 0 1.5.662 1.5 1.5 0 .646-.225 1.353-.623 2.143-.398.79-.933 1.595-1.501 2.448l-.017.026c-.552.828-1.134 1.702-1.575 2.576C10.338 11.072 10 12.021 10 13c0 .546.146 1.059.401 1.5H3A1.5 1.5 0 0 1 1.5 13c0-1.084.63-2.289 1.537-3.692.177-.274.366-.556.558-.845.632-.948 1.306-1.96 1.773-2.963h6.382a.75.75 0 0 0 .417-1.373c-.444-.298-.667-.656-.667-1.132a1.5 1.5 0 0 1 1.5-1.5z"/></svg>
+
+    </a>
+    Olivier Philippon
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/olivierphi/devblog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Homepage
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          2022
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="2022" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          2022
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-11---using-alembic-with-with-sqlalchemy-2/" class="md-nav__link">
+        Using Alembic with SQLAlchemy 2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-22---porting-a-python-web-app-to-go/" class="md-nav__link">
+        Porting a Python web app to Go
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-09---from-scratch-to-online-in-production-in-a-single-day-with-django-part-3/" class="md-nav__link">
+        'From scratch to online in production' in a single day, with Django - Part 3
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-28---making-sqlite-much-faster-in-a-local-dev-environment/" class="md-nav__link">
+        Making SQLite much faster in a local dev environment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-26---triggering-a-github-action-from-an-external-source/" class="md-nav__link">
+        Triggering a GitHub Action from an external source
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-22---from-scratch-to-online-in-production-in-a-single-day-with-django-part-2/" class="md-nav__link">
+        'From scratch to online in production' in a single day, with Django - Part 2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-19---from-scratch-to-online-in-production-in-a-single-day-with-django-part-1/" class="md-nav__link">
+        'From scratch to online in production' in a single day, with Django - Part 1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Building a Markdown-based blog
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Building a Markdown-based blog
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-not-nextjs" class="md-nav__link">
+    Why not Next.js?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#material-for-mkdocs" class="md-nav__link">
+    Material for MKDocs
+  </a>
+  
+    <nav class="md-nav" aria-label="Material for MKDocs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mkdocs-and-its-modern-material-theme" class="md-nav__link">
+    MkDocs and its modern Material theme
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-they-can-be-relevant-to-build-a-simple-devblog" class="md-nav__link">
+    Why they can be relevant to build a simple devblog
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quick-setup-of-material-for-mkdocs-as-a-blog" class="md-nav__link">
+    Quick setup of "Material for MKDocs as a blog"
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#my-quick-personal-touch" class="md-nav__link">
+    My quick personal touch
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-10---choosing-a-tech-stack-for-my-card-game-platform/" class="md-nav__link">
+        Choosing a tech stack for my card game platform
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          2023
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="2023" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          2023
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2023/05-17---til-content-hash-in-the-form-of-a-uuid/" class="md-nav__link">
+        TIL: Hashing data in the form of a UUID
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2023/05-26---let-s-try-kitty-layouts/" class="md-nav__link">
+        Let's try Kitty layouts
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2023/08-18---business_logic.py/" class="md-nav__link">
+        business_logic.py
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-not-nextjs" class="md-nav__link">
+    Why not Next.js?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#material-for-mkdocs" class="md-nav__link">
+    Material for MKDocs
+  </a>
+  
+    <nav class="md-nav" aria-label="Material for MKDocs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mkdocs-and-its-modern-material-theme" class="md-nav__link">
+    MkDocs and its modern Material theme
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-they-can-be-relevant-to-build-a-simple-devblog" class="md-nav__link">
+    Why they can be relevant to build a simple devblog
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quick-setup-of-material-for-mkdocs-as-a-blog" class="md-nav__link">
+    Quick setup of "Material for MKDocs as a blog"
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#my-quick-personal-touch" class="md-nav__link">
+    My quick personal touch
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+
+
+  
+
+  <nav class="md-tags" >
+    
+      
+        <a href="../../tags/#blog" class="md-tag">
+          blog
+        </a>
+      
+    
+      
+        <a href="../../tags/#mkdocs" class="md-tag">
+          mkdocs
+        </a>
+      
+    
+      
+        <a href="../../tags/#python" class="md-tag">
+          python
+        </a>
+      
+    
+  </nav>
+
+
+
+  <h1>Building a Markdown-based blog</h1>
+
+
+
+    
+    
+    <aside class="mdx-author">
+        <p>
+            <img src="https://avatars.githubusercontent.com/olivierphi" alt="@olivierphi">
+        </p>
+        <p>
+            <span> 
+                <b>Olivier Philippon</b> · <a href="https://github.com/olivierphi">@olivierphi</a>
+            </span>
+            <span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar2" viewBox="0 0 16 16">
+                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"/>
+                    <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z"/>
+                </svg> 2022-07-12
+            </span>
+        </p>
+    </aside>
+    
+
+
+<p>I've put this devblog online the other day, but haven't documented how I built it yet - 
+which will be useful for my future self if I have to do something like this again, and could 
+potentially be of some help for other people.  <br />
+Here is how I determined what was the quickest way (for me) to put a "devblog"
+online as quickly as possible, without hours of setup. <img alt="🙂" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f642.svg" title=":slight_smile:" /></p>
+<h2 id="why-not-nextjs">Why not Next.js?<a class="headerlink" href="#why-not-nextjs" title="Permanent link">&para;</a></h2>
+<p>My natural "go-to" option would be Next.js, with its <a href="https://nextjs.org/docs/basic-features/pages#static-generation-with-data">SSG capacities</a>
+and <a href="https://nextjs.org/docs/advanced-features/using-mdx">built-in support of MDX</a>.<br />
+Also, I like managing this kind of stuff manually myself - i.e. traversing a folder of Markdown files
+at deployment time when Vercel runs <code>npm run build</code>, sorting my content, providing the result to 
+<a href="https://nextjs.org/docs/basic-features/data-fetching/get-static-props">getStaticProps</a>... It's genuinely fun <img alt="🙂" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f642.svg" title=":slight_smile:" /></p>
+<p>However, even though I really enjoy doing this kind of work on the Node.js side there is a drawback for me:
+I would then have to build the user interface myself.<img alt="😔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f614.svg" title=":pensive:" /><br />
+And my skills in terms of design being as bad as they can be <img alt="😅" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f605.svg" title=":sweat_smile:" /> , I really don't want to
+work for hours on the React side only to end up with an ugly UI.</p>
+<p>There are open source or free turnkey blog templates for React/Next.js, of course, but I haven't really 
+seen any of their design that I like (that's obviously highly subjective).</p>
+<p>Hence my second option...</p>
+<h2 id="material-for-mkdocs">Material for MKDocs<a class="headerlink" href="#material-for-mkdocs" title="Permanent link">&para;</a></h2>
+<p>Or:</p>
+<blockquote>
+<p>Using a documentation engine to make a blog, what could go wrong? <img alt="😅" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f605.svg" title=":sweat_smile:" /></p>
+</blockquote>
+<p><em>(spoiler: it was quick and fun to do, I regret nothing :-)</em></p>
+<h3 id="mkdocs-and-its-modern-material-theme">MkDocs and its modern Material theme<a class="headerlink" href="#mkdocs-and-its-modern-material-theme" title="Permanent link">&para;</a></h3>
+<p><a href="https://www.mkdocs.org/">MkDocs</a> is a static documentation generator, programmed in Python and configurable in YAML,
+created (if I'm not wrong) by Tom Christie - who's also behind huge Python projects like 
+<a href="https://www.django-rest-framework.org/">Django REST Framework</a> or <a href="https://www.starlette.io/">Starlette</a>.   </p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>I don't know the history of MkDocs, but I guess Tom Christie created it to document Django REST Framework?</p>
+</div>
+<p><a href="https://squidfunk.github.io/mkdocs-material/">Material for MKDocs</a> is a theme for MKDocs, based on Google's
+Material UI guidelines, that make MKDocs look much more modern 
+(as great as the project is, MKDocs' default theme shows its age nowadays).</p>
+<h3 id="why-they-can-be-relevant-to-build-a-simple-devblog">Why they can be relevant to build a simple devblog<a class="headerlink" href="#why-they-can-be-relevant-to-build-a-simple-devblog" title="Permanent link">&para;</a></h3>
+<p>Neither MKDocs or <em>Material for MKDocs</em> are designed to make blogs (even though <a href="https://squidfunk.github.io/mkdocs-material/insiders/?h=blog#12000-piri-piri">it's on the roadmap</a>),
+but they have some common aspects with what I wanted to do:</p>
+<ul>
+<li>Treats folders of Markdown files (with YAML metadata in their header) as a tree of Web pages</li>
+<li>Built-in ability to publish static pages to <a href="https://pages.github.com/">GitHub Pages</a>, for free</li>
+<li>Simple but good-looking user interface theme <strong>by default</strong> <img alt="🎨" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f3a8.svg" title=":art:" /> , so I don't have to fiddle with HTML and CSS but
+   can focus on the content itself </li>
+<li>Made with a technology I'm familiar with (Python in this case)</li>
+<li>Excellent syntax highlighting (will be useful for my snippets :-), powered by Pygments</li>
+</ul>
+<p>The plugin <a href="https://github.com/lukasgeiter/mkdocs-awesome-pages-plugin">mkdocs-awesome-pages-plugin</a> also helps,
+so I don't have to build the whole navigation tree manually in the <code>mkdocs.yml</code> file <img alt="👌" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f44c.svg" title=":ok_hand:" /></p>
+<h3 id="quick-setup-of-material-for-mkdocs-as-a-blog">Quick setup of "<em>Material for MKDocs</em> as a blog"<a class="headerlink" href="#quick-setup-of-material-for-mkdocs-as-a-blog" title="Permanent link">&para;</a></h3>
+<p>I found two good resources explaining how to use <em>Material for MKDocs</em> as a blog engine, so I could hit the ground
+running (I really didn't want to spend hours on this setup <img alt="🙂" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f642.svg" title=":slight_smile:" />):</p>
+<ul>
+<li><a href="https://www.dirigible.io/blogs/2021/11/2/material-blogging-capabilities/">https://www.dirigible.io/blogs/2021/11/2/material-blogging-capabilities/</a></li>
+<li><a href="https://ultrabug.fr/Tech%20Blog/2021/2021-07-28-create-beautiful-and-localized-documentations-and-websites-using-mkdocs-github/">https://ultrabug.fr/Tech%20Blog/2021/2021-07-28-create-beautiful-and-localized-documentations-and-websites-using-mkdocs-github/</a></li>
+</ul>
+<p>The documentation of <em>Material for MKDocs</em> itself if really nice, and pragmatic - 
+explaining very simply for example how one can publish the generated static HTML content to GitHub Pages:</p>
+<ul>
+<li><a href="https://squidfunk.github.io/mkdocs-material/publishing-your-site">https://squidfunk.github.io/mkdocs-material/publishing-your-site</a></li>
+</ul>
+<p>It was looking doable! :-)<br />
+Let's give it a shot, with a quick Python setup:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$ mkdir devblog <span class="o">&amp;&amp;</span> <span class="nb">cd</span> devblog/
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>$ pyenv shell <span class="m">3</span>.10.4 <span class="c1"># (1) </span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>$ python -m venv .venv <span class="c1"># (2)</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>$ <span class="nb">source</span> .venv/bin/activate <span class="c1"># (3)</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="o">(</span>.venv<span class="o">)</span> $ pip install -U pip poetry <span class="c1"># (4)</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="o">(</span>.venv<span class="o">)</span> $ poetry init <span class="c1"># (5)</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="o">(</span>.venv<span class="o">)</span> $ poetry add <span class="se">\ </span><span class="c1"># (6)</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    mkdocs-material <span class="se">\</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    mkdocs-awesome-pages-plugin
+</code></pre></div></p>
+<ol>
+<li>let's use a recent version of Python </li>
+<li>create a virtual env in a ".venv" folder</li>
+<li>activate the virtual env: from now on the Python-related commands we type only impact the ".venv" folder</li>
+<li>in the virtual env, update pip and install the Poetry package manager</li>
+<li>initialise Poetry for this project</li>
+<li>ask Poetry to install the few packages we need for this blog</li>
+</ol>
+<p>Now all I had to do was to follow what these 2 articles were explaining, browse a bit the 
+<em>Material for MKDocs</em> documentation, use the <a href="https://squidfunk.github.io/mkdocs-material/reference/icons-emojis/?h=emoji#search">really nice icons and emojis search</a>
+provided by this documentation (it's the little things ^_^)...<br />
+and a couple of hours later my first blog post was online, automatically
+published by a GitHub Action every time I push my <code>main</code> branch! <img alt="✌" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/270c.svg" title=":v:" /></p>
+<h3 id="my-quick-personal-touch">My quick personal touch <img alt="👌" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f44c.svg" title=":ok_hand:" /><a class="headerlink" href="#my-quick-personal-touch" title="Permanent link">&para;</a></h3>
+<p>Compared to these two very useful articles, my only personal touch was to add two things I always use in my projects:</p>
+<ul>
+<li>The modern package manager <a href="https://python-poetry.org/">Poetry</a> rather than pip (the Python default one)</li>
+<li>Create a Makefile at the root of the git repository, for the common tasks</li>
+</ul>
+<p>I also wanted to automate the "posts table of content" on the blog homepage.<br />
+I chose to do it myself, mainly because it's the kind of things I really enjoy coding ^_^  </p>
+<p>The logic lives in the <a href="https://github.com/olivierphi/devblog/blob/main/my_hooks/blog_toc/hooks.py">my_plugins/blog_toc/hooks.py</a> 
+Python file, plugged to the MKDocs generation lifecycle with the nice 
+<a href="https://github.com/aklajnert/mkdocs-simple-hooks">mkdocs-simple-hooks</a> 
+package for the sake of simplicity <img alt="🙂" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f642.svg" title=":slight_smile:" /></p>
+<p>Later on I added the generation of a RSS feed when the blog is built, powered by the
+<a href="https://guts.github.io/mkdocs-rss-plugin/">mkdocs-rss-plugin</a> package.</p>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../07-19---from-scratch-to-online-in-production-in-a-single-day-with-django-part-1/" class="md-footer__link md-footer__link--prev" aria-label="Previous: &#39;From scratch to online in production&#39; in a single day, with Django - Part 1" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              'From scratch to online in production' in a single day, with Django - Part 1
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../07-10---choosing-a-tech-stack-for-my-card-game-platform/" class="md-footer__link md-footer__link--next" aria-label="Next: Choosing a tech stack for my card game platform" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Choosing a tech stack for my card game platform
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2022 Olivier Philippon
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    <a href="https://twitter.com/Rougemine" target="_blank" rel="noopener" title="Twitter" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+    </a>
+  
+    
+    
+    <a href="https://github.com/olivierphi" target="_blank" rel="noopener" title="Github" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+    
+    
+    <a href="https://www.linkedin.com/in/olivierphilippon/" target="_blank" rel="noopener" title="LinkedIn" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    <a href="/feed_rss_created.xml" target="_blank" rel="noopener" title="RSS feed" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M384 32H64C28.65 32 0 60.66 0 96v320c0 35.34 28.65 64 64 64h320c35.35 0 64-28.66 64-64V96c0-35.34-28.7-64-64-64zM150.6 374.6c-6.2 6.3-14.4 9.4-22.6 9.4s-16.38-3.121-22.63-9.371c-12.5-12.5-12.5-32.76 0-45.26C111.6 323.1 119.8 320 128 320s16.38 3.121 22.63 9.371C163.1 341.9 163.1 362.1 150.6 374.6zm99 9.3c-.6-.8-1.1.1-2.5.1-12.53 0-23.09-9.75-23.92-22.44C220.5 306.9 173.1 259.5 118.4 255.9c-13.22-.844-23.25-12.28-22.39-25.5.86-13.25 12.41-22.81 25.52-22.38 77.86 5.062 145.3 72.5 150.4 150.4.87 13.28-9.13 24.68-22.33 25.48zm95.4-.8c-.3.9-.7.9-1.9.9-12.8 0-23.42-10.09-23.97-23C315.6 254.6 225.4 164.4 119 159.1c-13.2.3-23.53-10.8-22.98-24.1.56-13.2 11.88-23.8 24.98-23 130.7 5.469 241.5 116.3 246.1 246.1 1.4 14.2-8.8 25.3-22.1 25z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tracking", "navigation.top", "navigation.tabs", "navigation.tabs.sticky", "navigation.instant", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>
