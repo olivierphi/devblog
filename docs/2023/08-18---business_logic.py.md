@@ -16,7 +16,7 @@ In a previous post I explained how I usually manage business logic
 in a [Django](https://www.djangoproject.com/) "startup" project, in an approximation
 of the [CQS](https://en.wikipedia.org/wiki/Command%E2%80%93query_separation) design pattern:
 
-- [How I manage business logic in a Django project](http://127.0.0.1:8000/2022/07-22---from-scratch-to-online-in-production-in-a-single-day-with-django-part-2/#next-step-we-have-to-organise-the-business-logic-inside-our-django-apps)
+- [How I manage business logic in a Django project](/2022/07-22---from-scratch-to-online-in-production-in-a-single-day-with-django-part-2/#next-step-we-have-to-organise-the-business-logic-inside-our-django-apps)
  
 I still love this way of organising the code, and how it allows one to **fully focus on
 writing and maintaining the code**, rather than wondering where to put this or that piece of code. :slight_smile:
